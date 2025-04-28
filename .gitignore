@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask cache files
+instance/
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# PyCharm / VSCode settings
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Migrations (optional — if you want to avoid committing them)
+migrations/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Test-related
+.tox/
+.nox/
+.pytest_cache/
+
+# Python virtual environment metadata
+pip-wheel-metadata/
