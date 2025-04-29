@@ -1,7 +1,6 @@
 from models import app, Movie, Actor, db
 from flask import jsonify, request, abort
 
-
 # Home route
 @app.route('/', methods=['GET'])
 def home():
