@@ -1,5 +1,3 @@
-from http.client import responses
-
 from models import app, Movie, Actor, db
 from flask import jsonify, request, abort
 
@@ -8,14 +6,11 @@ from flask import jsonify, request, abort
 @app.route('/', methods=['GET'])
 def home():
 
-    # Request's Response
-    response = {
+    # Send the response
+    return jsonify({
         'success': True,
         'message': 'Welcome to the Movie and Actor API!'
-    }
-
-    # Send the response
-    return jsonify(response), 200
+    }), 200
 
 # Get all movies
 @app.route('/movies', methods=['GET'])
@@ -28,8 +23,8 @@ def get_movies():
     if not movies:
         abort(404, description='No movies found!')
 
-    # Request's Response
-    response = {
+    # Send the response
+    return jsonify({
         'success': True,
         'movies': [
             {
@@ -39,30 +34,24 @@ def get_movies():
             }
             for movie in movies
         ]
-    }
-
-    # Send the response
-    return response, 200
+    }), 200
 
 # Get a single movie by ID
 @app.route('/movies/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
 
     # Fetch the movie by ID
-    movie = Movie.query.get_or_404(movie_id)
+    movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
 
     # Request's Response
-    response = {
+    return jsonify({
         'success': True,
         'movie': {
             'id': movie.id,
             'title': movie.title,
             'release_date': movie.release_date.strftime('%Y-%m-%d')
         }
-    }
-
-    # Send the response
-    return response, 200
+    }), 200
 
 # Create a new movie
 @app.route('/movies', methods=['POST'])
@@ -118,7 +107,7 @@ def update_movie(movie_id):
     response = {}
 
     # Fetch the movie by ID
-    movie = Movie.query.get_or_404(movie_id)
+    movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
 
     # Update the movie instance and add it to the database
     try:
@@ -147,19 +136,18 @@ def patch_movie(movie_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
-        return jsonify({'error': 'Invalid input! JSON data required.'}), 400
+        abort(400, description='Invalid input! JSON data required.')
 
     # Check if the required fields are present in the JSON data
     data = request.get_json()
     if 'title' not in data and 'release_date' not in data:
-        return jsonify({'error': 'Missing required fields: title and release_date.'}), 400
+        abort(400, description='Missing required fields: title and release_date.')
 
-    # Set up a flag to check for errors and INIT the Response
-    is_there_error = False
+    # INIT the Response
     response = {}
 
     # Fetch the movie by ID
-    movie = Movie.query.get_or_404(movie_id)
+    movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
 
     # Update the movie instance and add it to the database
     try:
@@ -176,25 +164,22 @@ def patch_movie(movie_id):
             'release_date': movie.release_date.strftime('%Y-%m-%d')
         }
     except Exception as e:
-        is_there_error = True
         db.session.rollback()
-        response['success'] = False
-        response['error'] = f'Failed to update movie: {str(e)}'
+        abort(500, description=f'Failed to update movie: {str(e)}')
     finally:
         db.session.close()
 
     # Send the response
-    return jsonify(response), 201 if not is_there_error else 500
+    return jsonify(response), 201
 
 # Delete a movie
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
 
     # Check if the movie exists
-    movie = Movie.query.get_or_404(movie_id)
+    movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
 
-    # Set up a flag to check for errors and INIT the Response
-    is_there_error = False
+    # INIT the Response
     response = {}
 
     # Delete the movie from the database
@@ -205,14 +190,12 @@ def delete_movie(movie_id):
         response['message'] = 'Movie deleted successfully!'
     except Exception as e:
         db.session.rollback()
-        is_there_error = True
-        response['success'] = False
-        response['error'] = f'Failed to delete movie: {str(e)}'
+        abort(500, description=f'Failed to delete movie: {str(e)}')
     finally:
         db.session.close()
 
     # Send the response
-    return jsonify(response), 200 if not is_there_error else 500
+    return jsonify(response), 200
 
 # Get all actors
 @app.route('/actors', methods=['GET'])
@@ -223,15 +206,10 @@ def get_actors():
 
     # Check if actors exist
     if not actors:
-        return jsonify(
-            {
-                'success': False,
-                'message': 'No actors found!'
-            }
-        ), 404
+        abort(404, description='No actors found!')
 
-    # Request's Response
-    response = {
+    # Send the response
+    return jsonify({
         'success': True,
         'actors': [
             {
@@ -241,76 +219,174 @@ def get_actors():
             }
             for actor in actors
         ]
-    }
-
-    # Send the response
-    return jsonify(response), 200
+    }), 200
 
 # Get a single actor by ID
 @app.route('/actors/<int:actor_id>', methods=['GET'])
-# TODO: This Endpoint is working - Return JSON With Success True
 def get_actor(actor_id):
 
     # Fetch the actor by ID
-    actor = Actor.query.get_or_404(actor_id)
+    actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
 
     # Request's Response
-    response = {
+    return jsonify({
         'success': True,
         'actor': {
             'id': actor.id,
             'name': actor.name,
             'age': actor.age,
         }
-    }
-
-    # Send the response
-    return jsonify(response), 200
+    }), 200
 
 # Create a new actor
 @app.route('/actors', methods=['POST'])
-# TODO: This Endpoint is working - Return JSON With Success True
 def create_actor():
+
+    # Check if the request contains JSON data
+    if not request.is_json:
+        abort(400, description='Invalid input! JSON data required.')
+
+    # Check if the required fields are present in the JSON data
     data = request.get_json()
-    new_actor = Actor(name=data['name'], age=data['age'], gender=data['gender'])
-    db.session.add(new_actor)
-    db.session.commit()
-    return jsonify({'id': new_actor.id, 'name': new_actor.name, 'age': new_actor.age, 'gender': new_actor.gender}), 201
+    if 'name' not in data or 'age' not in data or 'gender' not in data:
+        abort(400, description='Missing required fields: name, age, and gender.')
+
+    # INIT the Response
+    response = {}
+
+    # Create a new actor instance and add it to the database
+    try:
+        new_actor = Actor(name=data['name'], age=data['age'], gender=data['gender'])
+        db.session.add(new_actor)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'Actor created successfully!'
+        response['actor'] = {
+            'id': new_actor.id,
+            'name': new_actor.name,
+            'age': new_actor.age,
+            'gender': new_actor.gender
+        }
+    except Exception as e:
+        db.session.rollback()
+        abort(500, description=f'Failed to create actor: {str(e)}')
+    finally:
+        db.session.close()
+
+    # Send the response
+    return jsonify(response), 201
 
 # Update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PUT'])
-# TODO: This Endpoint is working - Return JSON With Success True
 def update_actor(actor_id):
-    data = request.get_json()
-    actor = Actor.query.get_or_404(actor_id)
-    actor.name = data['name']
-    actor.age = data['age']
-    actor.gender = data['gender']
-    db.session.commit()
-    return jsonify({'id': actor.id, 'name': actor.name, 'age': actor.age, 'gender': actor.gender}), 200
 
-@app.route('/actors/<int:actor_id>', methods=['PATCH'])
-# TODO: This Endpoint is working - Return JSON With Success True
-def patch_actor(actor_id):
+    # Check if the request contains JSON data
+    if not request.is_json:
+        abort(400, description='Invalid input! JSON data required.')
+
+    # Check if the required fields are present in the JSON data
     data = request.get_json()
-    actor = Actor.query.get_or_404(actor_id)
-    if 'name' in data:
+    if 'name' not in data or 'age' not in data or 'gender' not in data:
+        abort(400, description='Missing required fields: name, age, and gender.')
+
+    # INIT the Response
+    response = {}
+
+    # Fetch the actor by ID
+    actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
+
+    # Update the actor instance and add it to the database
+    try:
         actor.name = data['name']
-    if 'age' in data:
         actor.age = data['age']
-    if 'gender' in data:
-        actor.gender = data['gender']
-    db.session.commit()
-    return jsonify({'id': actor.id, 'name': actor.name, 'age': actor.age, 'gender': actor.gender}), 200
+        actor.gander = data['gender']
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'Actor updated successfully!'
+        response['actor'] = {
+            'id': actor.id,
+            'name': actor.name,
+            'age': actor.age,
+            'gender': actor.gender
+        }
+    except Exception as e:
+        db.session.rollback()
+        abort(500, description=f'Failed to update actor: {str(e)}')
+    finally:
+        db.session.close()
+
+    # Send the response
+    return jsonify(response), 201
+
+# Partially update an existing actor
+@app.route('/actors/<int:actor_id>', methods=['PATCH'])
+def patch_actor(actor_id):
+
+    # Check if the request contains JSON data
+    if not request.is_json:
+        abort(400, description='Invalid input! JSON data required.')
+
+    # Check if the required fields are present in the JSON data
+    data = request.get_json()
+    if 'name' not in data and 'age' not in data and 'gender' not in data:
+        abort(400, description='Missing required fields: name, age, and gender.')
+
+    # INIT the Response
+    response = {}
+
+    # Fetch the actor by ID
+    actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
+
+    # Update the actor instance and add it to the database
+    try:
+        if 'name' in data:
+            actor.name = data['name']
+        if 'age' in data:
+            actor.age = data['age']
+        if 'gender' in data:
+            actor.gender = data['gender']
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'Actor updated successfully!'
+        response['actor'] = {
+            'id': actor.id,
+            'name': actor.name,
+            'age': actor.age,
+            'gender': actor
+        }
+    except Exception as e:
+        db.session.rollback()
+        abort(500, description=f'Failed to update actor: {str(e)}')
+    finally:
+        db.session.close()
+
+    # Send the response
+    return jsonify(response), 201
 
 # Delete an actor
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-# TODO: This Endpoint is working - Return JSON With Success True
 def delete_actor(actor_id):
-    actor = Actor.query.get_or_404(actor_id)
-    db.session.delete(actor)
-    db.session.commit()
-    return jsonify({'message': 'Actor deleted successfully!'}), 200
+
+    # Check if the actor exists
+    actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
+
+    # INIT the Response
+    response = {}
+
+    # Delete the actor from the database
+    try:
+        db.session.delete(actor)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'Actor deleted successfully!'
+    except Exception as e:
+        db.session.rollback()
+        abort(500, description=f'Failed to delete actor: {str(e)}')
+    finally:
+        db.session.close()
+
+    # Send the response
+    return jsonify(response), 200
 
 # Error handling
 @app.errorhandler(404)
