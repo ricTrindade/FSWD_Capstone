@@ -1,18 +1,42 @@
+from http.client import responses
+
 from models import app, Movie, Actor, db
 from flask import jsonify, request
 
 # Home route
-# TODO: Return JSON With Success True
 @app.route('/')
 def home():
-    return "Welcome to the Movie and Actor API!"
+    response = {
+        'success': True,
+        'message': 'Welcome to the Movie and Actor API!'
+    }
+    return jsonify(response), 200
 
 # Get all movies
 # TODO: This Endpoint is working - Return JSON With Success True
 @app.route('/movies', methods=['GET'])
 def get_movies():
+
+    # Fetch all movies from the database
     movies = Movie.query.all()
-    return jsonify([{'id': movie.id, 'title': movie.title, 'release_date': movie.release_date.strftime('%Y-%m-%d')} for movie in movies]), 200
+
+    # Check if movies exist
+    if not movies:
+        return jsonify({'message': 'No movies found!'}), 404
+
+    # Request's Response
+    response = {
+        'success': True,
+        'movies': [
+            {
+                'id': movie.id,
+                'title': movie.title,
+                'release_date': movie.release_date.strftime('%Y-%m-%d')
+            }
+            for movie in movies
+        ]
+    }
+    return response, 200
 
 # Get a single movie by ID
 # TODO: This Endpoint is working - Return JSON With Success True
@@ -33,6 +57,7 @@ def create_movie():
 
 # Update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PUT'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def update_movie(movie_id):
     data = request.get_json()
     movie = Movie.query.get_or_404(movie_id)
@@ -41,8 +66,22 @@ def update_movie(movie_id):
     db.session.commit()
     return jsonify({'id': movie.id, 'title': movie.title, 'release_date': movie.release_date.strftime('%Y-%m-%d')}), 200
 
+# Partially update an existing movie
+@app.route('/movies/<int:movie_id>', methods=['PATCH'])
+# TODO: This Endpoint is working - Return JSON With Success True
+def patch_movie(movie_id):
+    data = request.get_json()
+    movie = Movie.query.get_or_404(movie_id)
+    if 'title' in data:
+        movie.title = data['title']
+    if 'release_date' in data:
+        movie.release_date = data['release_date']
+    db.session.commit()
+    return jsonify({'id': movie.id, 'title': movie.title, 'release_date': movie.release_date.strftime('%Y-%m-%d')}), 200
+
 # Delete a movie
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def delete_movie(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     db.session.delete(movie)
@@ -51,18 +90,21 @@ def delete_movie(movie_id):
 
 # Get all actors
 @app.route('/actors', methods=['GET'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def get_actors():
     actors = Actor.query.all()
     return jsonify([{'id': actor.id, 'name': actor.name, 'age': actor.age, 'gender': actor.gender} for actor in actors]), 200
 
 # Get a single actor by ID
 @app.route('/actors/<int:actor_id>', methods=['GET'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def get_actor(actor_id):
     actor = Actor.query.get_or_404(actor_id)
     return jsonify({'id': actor.id, 'name': actor.name, 'age': actor.age, 'gender': actor.gender}), 200
 
 # Create a new actor
 @app.route('/actors', methods=['POST'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def create_actor():
     data = request.get_json()
     new_actor = Actor(name=data['name'], age=data['age'], gender=data['gender'])
@@ -72,6 +114,7 @@ def create_actor():
 
 # Update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PUT'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def update_actor(actor_id):
     data = request.get_json()
     actor = Actor.query.get_or_404(actor_id)
@@ -82,6 +125,7 @@ def update_actor(actor_id):
     return jsonify({'id': actor.id, 'name': actor.name, 'age': actor.age, 'gender': actor.gender}), 200
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def patch_actor(actor_id):
     data = request.get_json()
     actor = Actor.query.get_or_404(actor_id)
@@ -96,6 +140,7 @@ def patch_actor(actor_id):
 
 # Delete an actor
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+# TODO: This Endpoint is working - Return JSON With Success True
 def delete_actor(actor_id):
     actor = Actor.query.get_or_404(actor_id)
     db.session.delete(actor)
