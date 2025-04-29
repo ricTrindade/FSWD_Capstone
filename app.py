@@ -70,15 +70,14 @@ def create_movie():
 
     # Check if the request contains JSON data
     if not request.is_json:
-        return jsonify({'error': 'Invalid input! JSON data required.'}), 400
+        abort(400, description='Invalid input! JSON data required.')
 
     # Check if the required fields are present in the JSON data
     data = request.get_json()
     if 'title' not in data or 'release_date' not in data:
-        return jsonify({'error': 'Missing required fields: title and release_date.'}), 400
+        abort(400, description='Missing required fields: title and release_date.')
 
-    # Set up a flag to check for errors and INIT the Response
-    is_there_error = False
+    # INIT the Response
     response = {}
 
     # Create a new movie instance and add it to the database
@@ -94,15 +93,13 @@ def create_movie():
             'release_date': new_movie.release_date.strftime('%Y-%m-%d')
         }
     except Exception as e:
-        is_there_error = True
         db.session.rollback()
-        response['success'] = False
-        response['error'] = f'Failed to create movie: {str(e)}'
+        abort(500, description=f'Failed to create movie: {str(e)}')
     finally:
         db.session.close()
 
     # Send the response
-    return jsonify(response), 201 if not is_there_error else 500
+    return jsonify(response), 201
 
 # Update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PUT'])
@@ -110,15 +107,14 @@ def update_movie(movie_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
-        return jsonify({'error': 'Invalid input! JSON data required.'}), 400
+        abort(400, description='Invalid input! JSON data required.')
 
     # Check if the required fields are present in the JSON data
     data = request.get_json()
     if 'title' not in data or 'release_date' not in data:
-        return jsonify({'error': 'Missing required fields: title and release_date.'}), 400
+        abort(400, description='Missing required fields: title and release_date.')
 
-    # Set up a flag to check for errors and INIT the Response
-    is_there_error = False
+    # INIT the Response
     response = {}
 
     # Fetch the movie by ID
@@ -137,15 +133,13 @@ def update_movie(movie_id):
             'release_date': movie.release_date.strftime('%Y-%m-%d')
         }
     except Exception as e:
-        is_there_error = True
         db.session.rollback()
-        response['success'] = False
-        response['error'] = f'Failed to update movie: {str(e)}'
+        abort(500, description=f'Failed to update movie: {str(e)}')
     finally:
         db.session.close()
 
     # Send the response
-    return jsonify(response), 201 if not is_there_error else 500
+    return jsonify(response), 201
 
 # Partially update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
