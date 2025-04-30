@@ -1,5 +1,6 @@
 from models import app, Movie, Actor, db
 from flask import jsonify, request, abort
+from auth import AuthError, requires_auth
 
 # Home route
 @app.route('/', methods=['GET'])
@@ -13,6 +14,7 @@ def home():
 
 # Get all movies
 @app.route('/movies', methods=['GET'])
+@requires_auth('get:movies')
 def get_movies():
 
     # Fetch all movies from the database
@@ -37,6 +39,7 @@ def get_movies():
 
 # Get a single movie by ID
 @app.route('/movies/<int:movie_id>', methods=['GET'])
+@requires_auth('get:movies')
 def get_movie(movie_id):
 
     # Fetch the movie by ID
@@ -54,6 +57,7 @@ def get_movie(movie_id):
 
 # Create a new movie
 @app.route('/movies', methods=['POST'])
+@requires_auth('post:movies')
 def create_movie():
 
     # Check if the request contains JSON data
@@ -91,6 +95,7 @@ def create_movie():
 
 # Update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PUT'])
+@requires_auth('update:movies')
 def update_movie(movie_id):
 
     # Check if the request contains JSON data
@@ -131,6 +136,7 @@ def update_movie(movie_id):
 
 # Partially update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+@requires_auth('update:movies')
 def patch_movie(movie_id):
 
     # Check if the request contains JSON data
@@ -173,6 +179,7 @@ def patch_movie(movie_id):
 
 # Delete a movie
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+@requires_auth('delete:movies')
 def delete_movie(movie_id):
 
     # Check if the movie exists
@@ -198,6 +205,7 @@ def delete_movie(movie_id):
 
 # Get all actors
 @app.route('/actors', methods=['GET'])
+@requires_auth('get:actors')
 def get_actors():
 
     # Fetch all actors from the database
@@ -222,6 +230,7 @@ def get_actors():
 
 # Get a single actor by ID
 @app.route('/actors/<int:actor_id>', methods=['GET'])
+@requires_auth('get:actors')
 def get_actor(actor_id):
 
     # Fetch the actor by ID
@@ -239,6 +248,7 @@ def get_actor(actor_id):
 
 # Create a new actor
 @app.route('/actors', methods=['POST'])
+@requires_auth('post:actors')
 def create_actor():
 
     # Check if the request contains JSON data
@@ -277,6 +287,7 @@ def create_actor():
 
 # Update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PUT'])
+@requires_auth('update:actors')
 def update_actor(actor_id):
 
     # Check if the request contains JSON data
@@ -319,6 +330,7 @@ def update_actor(actor_id):
 
 # Partially update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+@requires_auth('update:actors')
 def patch_actor(actor_id):
 
     # Check if the request contains JSON data
@@ -364,6 +376,7 @@ def patch_actor(actor_id):
 
 # Delete an actor
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+@requires_auth('delete:actors')
 def delete_actor(actor_id):
 
     # Check if the actor exists
