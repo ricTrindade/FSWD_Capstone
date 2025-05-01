@@ -1,6 +1,6 @@
 from models import app, Movie, Actor, db
 from flask import jsonify, request, abort
-from auth import AuthError, requires_auth
+from auth import requires_auth
 
 # Home route
 @app.route('/', methods=['GET'])
@@ -15,7 +15,7 @@ def home():
 # Get all movies
 @app.route('/movies', methods=['GET'])
 @requires_auth('get:movies')
-def get_movies():
+def get_movies(jwt_payload):
 
     # Fetch all movies from the database
     movies = Movie.query.all()
@@ -40,7 +40,7 @@ def get_movies():
 # Get a single movie by ID
 @app.route('/movies/<int:movie_id>', methods=['GET'])
 @requires_auth('get:movies')
-def get_movie(movie_id):
+def get_movie(jwt_payload, movie_id):
 
     # Fetch the movie by ID
     movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
@@ -58,7 +58,7 @@ def get_movie(movie_id):
 # Create a new movie
 @app.route('/movies', methods=['POST'])
 @requires_auth('post:movies')
-def create_movie():
+def create_movie(jwt_payload):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -96,7 +96,7 @@ def create_movie():
 # Update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PUT'])
 @requires_auth('update:movies')
-def update_movie(movie_id):
+def update_movie(jwt_payload, movie_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -137,7 +137,7 @@ def update_movie(movie_id):
 # Partially update an existing movie
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 @requires_auth('update:movies')
-def patch_movie(movie_id):
+def patch_movie(jwt_payload, movie_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -180,7 +180,7 @@ def patch_movie(movie_id):
 # Delete a movie
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 @requires_auth('delete:movies')
-def delete_movie(movie_id):
+def delete_movie(jwt_payload, movie_id):
 
     # Check if the movie exists
     movie = Movie.query.get_or_404(movie_id, description='Movie not found with the provided ID.')
@@ -206,7 +206,7 @@ def delete_movie(movie_id):
 # Get all actors
 @app.route('/actors', methods=['GET'])
 @requires_auth('get:actors')
-def get_actors():
+def get_actors(jwt_payload):
 
     # Fetch all actors from the database
     actors = Actor.query.all()
@@ -231,7 +231,7 @@ def get_actors():
 # Get a single actor by ID
 @app.route('/actors/<int:actor_id>', methods=['GET'])
 @requires_auth('get:actors')
-def get_actor(actor_id):
+def get_actor(jwt_payload, actor_id):
 
     # Fetch the actor by ID
     actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
@@ -249,7 +249,7 @@ def get_actor(actor_id):
 # Create a new actor
 @app.route('/actors', methods=['POST'])
 @requires_auth('post:actors')
-def create_actor():
+def create_actor(jwt_payload):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -288,7 +288,7 @@ def create_actor():
 # Update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PUT'])
 @requires_auth('update:actors')
-def update_actor(actor_id):
+def update_actor(jwt_payload, actor_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -331,7 +331,7 @@ def update_actor(actor_id):
 # Partially update an existing actor
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
 @requires_auth('update:actors')
-def patch_actor(actor_id):
+def patch_actor(jwt_payload, actor_id):
 
     # Check if the request contains JSON data
     if not request.is_json:
@@ -363,7 +363,7 @@ def patch_actor(actor_id):
             'id': actor.id,
             'name': actor.name,
             'age': actor.age,
-            'gender': actor
+            'gender': actor.gender
         }
     except Exception as e:
         db.session.rollback()
@@ -377,7 +377,7 @@ def patch_actor(actor_id):
 # Delete an actor
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 @requires_auth('delete:actors')
-def delete_actor(actor_id):
+def delete_actor(jwt_payload, actor_id):
 
     # Check if the actor exists
     actor = Actor.query.get_or_404(actor_id, description='Actor not found with the provided ID.')
@@ -438,6 +438,26 @@ def method_not_allowed(error):
         'message': f'Method not allowed: {error}'
     }
     return jsonify(response), 405
+
+# Unauthorized error handling
+@app.errorhandler(401)
+def unauthorized(error):
+    response = {
+        'success': False,
+        'error': 401,
+        'message': f'Unauthorized: {error}'
+    }
+    return jsonify(response), 401
+
+# Forbidden error handling
+@app.errorhandler(403)
+def forbidden(error):
+    response = {
+        'success': False,
+        'error': 403,
+        'message': f'Forbidden: {error}'
+    }
+    return jsonify(response), 403
 
 # Run the app
 if __name__ == '__main__':
