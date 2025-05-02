@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 # Load environment variables from .env file
 load_dotenv()
 
-# Access variables
+# Access environments variables
 database_url = os.getenv("DATABASE_URL")
 flask_app = os.getenv("FLASK_APP")
 flask_env = os.getenv("FLASK_ENV")
