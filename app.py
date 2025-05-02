@@ -12,6 +12,26 @@ def home():
         'message': 'Welcome to the Movie and Actor API!'
     }), 200
 
+# Login Results
+@app.route('/login-results', methods=['GET'])
+def login():
+
+    # Send the response
+    return jsonify({
+        'success': True,
+        'message': 'Login successful!',
+    }), 200
+
+# Logout
+@app.route('/logout', methods=['GET'])
+def logout():
+
+    # Send the response
+    return jsonify({
+        'success': True,
+        'message': 'Logout successful!',
+    }), 200
+
 # Get all movies
 @app.route('/movies', methods=['GET'])
 @requires_auth('get:movies')

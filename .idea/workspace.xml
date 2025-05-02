@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="056fee67-e7a8-4550-a838-c7d1ab12ae6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/role_based_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,17 +36,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors.executor": "Run",
+    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors.executor": "Debug",
     "Python tests.Python tests for test_app.test_get_movies_not_found.executor": "Run",
     "Python tests.Python tests for test_app.test_get_movies_success.executor": "Run",
-    "Python.app.executor": "Debug",
+    "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
@@ -116,8 +116,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors" />
         <item itemvalue="Python tests.Python tests for test_app.test_get_movies_success" />
         <item itemvalue="Python tests.Python tests for test_app.test_get_movies_not_found" />
       </list>
@@ -151,7 +151,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>20</line>
+          <line>40</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
