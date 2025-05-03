@@ -37,6 +37,9 @@ class TestApp(unittest.TestCase):
     def setUp(self):
         self.app_context = app.app_context()
         self.app_context.push()
+        db.session.query(Actor).delete()
+        db.session.query(Movie).delete()
+        db.session.commit()
 
     def tearDown(self):
         self.app_context.pop()
@@ -59,7 +62,7 @@ class TestApp(unittest.TestCase):
 
     # Tests for /movies/<int:movie_id> endpoint
     def test_get_movie_success(self):
-        movie = Movie(title="Test Movie", release_date="2023-01-01")
+        movie = Movie(title="Test Movie", release_date=date(2023, 1, 1))
         db.session.add(movie)
         db.session.commit()
         movie_id = movie.id
@@ -89,7 +92,7 @@ class TestApp(unittest.TestCase):
 
     # Tests for /movies/<int:movie_id> PUT endpoint
     def test_update_movie_success(self):
-        movie = Movie(title="Old Title", release_date="2023-01-01")
+        movie = Movie(title="Old Title", release_date=date(2023, 1, 1))
         db.session.add(movie)
         db.session.commit()
         movie_id = movie.id
@@ -106,7 +109,7 @@ class TestApp(unittest.TestCase):
 
     # Tests for /movies/<int:movie_id> DELETE endpoint
     def test_delete_movie_success(self):
-        movie = Movie(title="Test Movie", release_date="2023-01-01")
+        movie = Movie(title="Test Movie", release_date=date(2023, 1, 1))
         db.session.add(movie)
         db.session.commit()
         movie_id = movie.id

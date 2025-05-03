@@ -2,6 +2,11 @@ import unittest
 from app import app, db, Movie, Actor
 from flask import jsonify
 
+"""Role Based Access Control Test Cases"""
+
+# Access environment variables
+executive_pro = os.getenv("EXECUTIVE_PRODUCER_KEY")
+
 class TestRoleBasedAccessControl(unittest.TestCase):
 
     @classmethod
