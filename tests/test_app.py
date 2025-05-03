@@ -54,12 +54,6 @@ class TestApp(unittest.TestCase):
         self.assertTrue(response.json['success'])
         self.assertEqual(len(response.json['movies']), 1)
 
-    def test_get_movies_not_found(self):
-        response = self.client.get('/movies', headers=self.headers)
-        self.assertEqual(response.status_code, 404)
-        self.assertFalse(response.json['success'])
-        self.assertIn('No movies found!', response.json['message'])
-
     # Tests for /movies/<int:movie_id> endpoint
     def test_get_movie_success(self):
         movie = Movie(title="Test Movie", release_date=date(2023, 1, 1))
@@ -133,12 +127,6 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json['success'])
         self.assertEqual(len(response.json['actors']), 1)
-
-    def test_get_actors_not_found(self):
-        response = self.client.get('/actors', headers=self.headers)
-        self.assertEqual(response.status_code, 404)
-        self.assertFalse(response.json['success'])
-        self.assertIn('No actors found!', response.json['message'])
 
     # Tests for /actors/<int:actor_id> endpoint
     def test_get_actor_success(self):

@@ -7,6 +7,7 @@
     <list default="true" id="056fee67-e7a8-4550-a838-c7d1ab12ae6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/role_based_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/role_based_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors.executor": "Debug",
+    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors.executor": "Run",
+    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_cannot_add_actor.executor": "Run",
+    "Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_director_can_add_actor.executor": "Run",
     "Python tests.Python tests for test_app.TestApp.test_create_actor_invalid_input.executor": "Run",
     "Python tests.Python tests for test_app.TestApp.test_create_actor_success.executor": "Run",
     "Python tests.Python tests for test_app.TestApp.test_create_movie_invalid_input.executor": "Run",
@@ -68,8 +71,8 @@
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_app.TestApp.test_get_movies_success">
-    <configuration name="Python tests for test_app.TestApp.test_create_movie_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_executive_producer_can_add_movie">
+    <configuration name="Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -80,11 +83,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_app.TestApp.test_create_movie_success&quot;" />
+      <option name="_new_target" value="&quot;role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_app.TestApp.test_get_movie_not_found" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_cannot_add_actor" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,11 +98,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_app.TestApp.test_get_movie_not_found&quot;" />
+      <option name="_new_target" value="&quot;role_based_test.TestRoleBasedAccessControl.test_casting_assistant_cannot_add_actor&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_app.TestApp.test_get_movie_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_director_can_add_actor" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -110,11 +113,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_app.TestApp.test_get_movie_success&quot;" />
+      <option name="_new_target" value="&quot;role_based_test.TestRoleBasedAccessControl.test_casting_director_can_add_actor&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_app.TestApp.test_get_movies_not_found" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_director_cannot_delete_movie" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -125,11 +128,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_app.TestApp.test_get_movies_not_found&quot;" />
+      <option name="_new_target" value="&quot;role_based_test.TestRoleBasedAccessControl.test_casting_director_cannot_delete_movie&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_app.TestApp.test_get_movies_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for role_based_test.TestRoleBasedAccessControl.test_executive_producer_can_add_movie" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="FSWD_Capstone" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -140,17 +143,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_app.TestApp.test_get_movies_success&quot;" />
+      <option name="_new_target" value="&quot;role_based_test.TestRoleBasedAccessControl.test_executive_producer_can_add_movie&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_app.TestApp.test_get_movies_success" />
-        <item itemvalue="Python tests.Python tests for test_app.TestApp.test_get_movies_not_found" />
-        <item itemvalue="Python tests.Python tests for test_app.TestApp.test_get_movie_success" />
-        <item itemvalue="Python tests.Python tests for test_app.TestApp.test_get_movie_not_found" />
-        <item itemvalue="Python tests.Python tests for test_app.TestApp.test_create_movie_success" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_executive_producer_can_add_movie" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_director_cannot_delete_movie" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_director_can_add_actor" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_cannot_add_actor" />
+        <item itemvalue="Python tests.Python tests for role_based_test.TestRoleBasedAccessControl.test_casting_assistant_can_view_actors" />
       </list>
     </recent_temporary>
   </component>
@@ -177,7 +180,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/role_based_test.py</url>
-          <line>32</line>
+          <line>46</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

@@ -48,10 +48,6 @@ def get_movies(jwt_payload):
     # Fetch all movies from the database
     movies = Movie.query.all()
 
-    # Check if movies exist
-    if not movies:
-        abort(404, description='No movies found!')
-
     # Send the response
     return jsonify({
         'success': True,
@@ -239,10 +235,6 @@ def get_actors(jwt_payload):
 
     # Fetch all actors from the database
     actors = Actor.query.all()
-
-    # Check if actors exist
-    if not actors:
-        abort(404, description='No actors found!')
 
     # Send the response
     return jsonify({

@@ -116,7 +116,8 @@ The **Casting Agency** models a company responsible for creating movies and mana
 
 2. **Run Tests**
    ```bash
-   python -m unittest discover
+   python -m unittest tests/test_app.py
+   python -m unittest tests/role_based_test.py
    ```
 
 ### Test Coverage
