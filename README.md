@@ -69,6 +69,13 @@ The **Casting Agency** project was developed to demonstrate the implementation o
 * Python 3.7+
 * `pip` package manager
 * Virtual environment tool (recommended)
+* Create Environment variables in `.env` file that are required for the application to run. The `.env` file should contain the following variables:
+  * AUTH0_DOMAIN
+  * API_IDENTIFIER
+  * ALGORITHMS
+  * JWT_SECRET
+  * DATABASE_URL
+
 
 ### 📦 Project Dependencies
 
